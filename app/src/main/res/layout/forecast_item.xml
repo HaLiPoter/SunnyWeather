@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/dataInfo"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="4"/>
+    
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/skyIcon"/>
+    
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/skyInfo"
+        android:layout_weight="3"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/temperatureInfo"
+        android:layout_weight="3"
+        android:layout_gravity="center_vertical"
+        android:gravity="end"/>
+
+        
+
+</LinearLayout>

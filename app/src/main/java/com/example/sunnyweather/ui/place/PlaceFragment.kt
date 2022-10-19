@@ -1,5 +1,6 @@
 package com.example.sunnyweather.ui.place
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.lifecycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sunnyweather.R
+import com.example.sunnyweather.ui.weather.WeatherActivity
 
 class PlaceFragment: Fragment() {
 
@@ -33,6 +35,17 @@ class PlaceFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if (viewModel.isPlaceSaved()){
+            val place=viewModel.getSavedPlace()
+            val intent=Intent(context,WeatherActivity::class.java).apply {
+                putExtra("location_lng",place.location.lng)
+                putExtra("location_lat",place.location.lat)
+                putExtra("place_name",place.name)
+            }
+            startActivity(intent)
+            activity?.finish()
+            return
+        }
         Log.d("PlaceFragment","onActivityCreated1")
         val layoutManger=LinearLayoutManager(activity)
         val recyclerView:RecyclerView=mview.findViewById(R.id.recyclerView)
@@ -45,7 +58,7 @@ class PlaceFragment: Fragment() {
             val content=editable.toString()
             Log.d("PlaceFragment","addTextChangedListener")
             if(content.isNotEmpty()){
-                viewModel.searchPlaces(content)
+                viewModel.searchPlaces(content)//
             }else{
                 recyclerView.visibility=View.GONE
                 val bgImageView:ImageView=mview.findViewById(R.id.bgImageView)
@@ -54,7 +67,6 @@ class PlaceFragment: Fragment() {
                 adapter.notifyDataSetChanged()
             }
         }
-        Log.d("PlaceFragment","onActivityCreated3")
         viewModel.placeLiveData.observe(viewLifecycleOwner, Observer { result->
             val places=result.getOrNull()
             if(places!=null){
@@ -65,7 +77,7 @@ class PlaceFragment: Fragment() {
                 viewModel.placeList.addAll(places)
                 Log.d("placeFragment","这里开始")
                 for(p in viewModel.placeList){
-                    Log.d("MainActivity","地点"+p.name)
+                    Log.d("placeFragment","地点"+p.name)
                 }
                 adapter.notifyDataSetChanged()
             }else{
